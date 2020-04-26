@@ -3,7 +3,8 @@ const controller = require("../../controllers/applications");
 
 router
     .route("/")
-    .post(controller.createApplication);
+    .post(controller.createApplication)
+    .get(controller.findUnassignedApplications);
 
 
 module.exports = router;

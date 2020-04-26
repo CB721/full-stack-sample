@@ -53,7 +53,8 @@ module.exports = {
                     // save user to session
                     req.session.user = {
                         email: results.email,
-                        id: results.id
+                        id: results.id,
+                        is_admin: results.is_admin
                     }
                     // send success
                     return res.status(200).send("success");
@@ -97,13 +98,12 @@ module.exports = {
                         // save user to session
                         req.session.user = {
                             email: user.email,
-                            id: user.id
+                            id: user.id,
+                            is_admin: user.is_admin
                         }
                         if (user.is_admin) {
-                            console.log("hi");
                             admin(user);
                         } else {
-                            console.log("hi");
                             applicant(user);
                         }
                     } else {
