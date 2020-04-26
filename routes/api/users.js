@@ -7,5 +7,8 @@ router
 router
     .route("/login")
     .post(controller.login);
+router
+    .route("/logout")
+    .get(controller.logout);
 
 module.exports = router;

@@ -156,10 +156,15 @@ module.exports = {
                     }
                     return res.status(200).json(fullUser);
                 })
-                .catch(err => {
-                    console.log(err);
-                    res.status(500).json(err);
-                });
+                .catch(err => res.status(500).json(err));
         }
+    },
+    logout: (req, res) => {
+        req.session.destroy(err => {
+            if (err) throw err;
+            else {
+                return res.status(200).send("logged out");
+            }
+        });
     }
 }
