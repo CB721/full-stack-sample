@@ -1,1 +1,49 @@
 @import "../../App.scss";
+
+.profile {
+    @include page-default;
+    .user-info,
+    .applications {
+        padding: 3%;
+        margin: 5vh auto;
+        border: 0.3rem solid $red;
+        width: 40vw;
+        @include default-border-radius;
+        .info-header,
+        .info {
+            color: $beige;
+            margin: 2% auto;
+            text-align: center;
+        }
+        .info-header {
+            border-bottom: 0.3rem solid $red;
+        }
+        .single-app {
+            border: 0.1rem solid $grey-blue;
+            @include default-border-radius;
+            margin-bottom: 5vh;
+            form {
+                .input-section {
+                    margin: 0 auto;
+                    width: 75%;
+                    .input-name {
+                        width: 100%;
+                        color: $beige;
+                        text-align: center;
+                    }
+                    .cust-input {
+                        width: 100%;
+                        margin: 3% auto;
+                        @include default-border-radius;
+                        height: 3vh;
+                        transition: 0.3s;
+                        &:focus {
+                            outline: none;
+                            border-color: $red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
