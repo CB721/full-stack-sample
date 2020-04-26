@@ -5,7 +5,11 @@ import "./style.scss";
 function Home(props) {
     return (
         <div className="home">
-
+            <div className="page-section">
+                <p className="page-name">
+                    Sample App
+                </p>
+            </div>
         </div>
     )
 }

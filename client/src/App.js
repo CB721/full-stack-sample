@@ -19,6 +19,22 @@ function App() {
             />
           )}
         />
+        <Route
+          exact path="/profile"
+          render={props => (
+            <Profile
+              {...props}
+            />
+          )}
+        />
+        <Route
+          exact path="/login"
+          render={props => (
+            <Login
+              {...props}
+            />
+          )}
+        />
       </Switch>
     </Router>
   );

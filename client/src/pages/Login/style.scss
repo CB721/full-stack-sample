@@ -1,1 +1,44 @@
 @import "../../App.scss";
+
+.login {
+    @include page-default;
+    form {
+        margin: 0 auto;
+        @include default-border-radius;
+        width: 40vw;
+        border: 0.3rem solid $red;
+        transition: 0.3s;
+        .form-header {
+            width: 100%;
+            line-height: 5vh;
+            font-size: 4vh;
+            text-align: center;
+            background: $red;
+            color: $beige;
+            margin-bottom: 5vh;
+        }
+        .input-section {
+            margin: 0 auto;
+            width: 75%;
+            .input-name {
+                width: 100%;
+                color: $beige;
+                text-align: center;
+            }
+            .cust-input {
+                width: 100%;
+                margin: 3% auto;
+                @include default-border-radius;
+                height: 3vh;
+                transition: 0.3s;
+                &:focus {
+                    outline: none;
+                    border-color: $red;
+                }
+            }
+        }
+        &:hover {
+            @include red-shadow;
+        }
+    }
+}

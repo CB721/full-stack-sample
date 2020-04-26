@@ -1,5 +1,20 @@
-$black: #2D2D2A;
-$grey: #4C4C47;
-$grey-blue: #848FA5;
-$red: #C14953;
-$beige: #E5DCC5;
+$black: #2d2d2a;
+$grey: #4c4c47;
+$grey-blue: #848fa5;
+$red: #c14953;
+$beige: #e5dcc5;
+
+@mixin default-border-radius {
+    border-radius: 0.5rem;
+}
+@mixin red-shadow {
+    box-shadow: 0px 0.5rem 1rem rgba(193, 73, 83, 0.262);
+}
+@mixin page-default {
+    margin-top: 20vh;
+    height: 90vh;
+    width: 100vw;
+}
+body {
+    background-color: $grey;
+}
