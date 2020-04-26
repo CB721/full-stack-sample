@@ -3,6 +3,9 @@ const controller = require("../../controllers/users");
 
 router
     .route("/")
-    .post(controller.createUser)
+    .post(controller.createUser);
+router
+    .route("/login")
+    .post(controller.login);
 
 module.exports = router;
