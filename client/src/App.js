@@ -1,11 +1,26 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Nav from "./components/Nav";
+import './App.scss';
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <Router>
+      <Nav />
+      <Switch>
+        <Route
+          exact path="/"
+          render={props => (
+            <Home
+              {...props}
+            />
+          )}
+        />
+      </Switch>
+    </Router>
   );
 }
 

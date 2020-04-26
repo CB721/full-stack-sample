@@ -31,10 +31,6 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(routes);
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
-
 // change to false for production
 db.sequelize.sync({ force: false }).then(function () {
     app.listen(PORT, function () {

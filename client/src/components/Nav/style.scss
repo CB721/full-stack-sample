@@ -1,0 +1,11 @@
+@import "../../App.scss";
+
+.nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 10vh;
+    background: $black;
+    color: $beige;
+}
