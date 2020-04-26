@@ -1,6 +1,5 @@
 const { User, Application } = require("../models");
 const bcrypt = require("bcryptjs");
-const crypto = require("crypto");
 const { isEmail, isByteLength } = require("validator");
 const { corbato } = require("../utilities/hashPass");
 
