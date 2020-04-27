@@ -147,6 +147,7 @@ module.exports = {
                     // omit the user's password;
                     const fullUser = {
                         applications,
+                        id: user.id,
                         email: user.email,
                         first_name: user.first_name,
                         last_name: user.last_name,
@@ -168,6 +169,7 @@ module.exports = {
                     // omit the user's password;
                     const fullUser = {
                         applications,
+                        id: user.id,
                         email: user.email,
                         first_name: user.first_name,
                         last_name: user.last_name,

@@ -7,10 +7,10 @@ function Profile(props) {
     function handleInputChange(event) {
         setContent(event.target.value);
     }
-    function selectApp() {
-        console.log("assign application");
+    function selectApp(event, userID, appID) {
+        event.preventDefault();
+        console.log("assign application", userID, appID);
     }
-    console.log(props.applications);
     return (
         <div className="profile">
             <div className="user-info">
@@ -49,19 +49,27 @@ function Profile(props) {
                             ))}
                         </div>
                     ) : (<div />)}
-                    <div className="applications">
-                        <div className="info-header">
-                            Select an application
-                        </div>
-                        <div className="single-app" onClick={selectApp}>
-                            <div className="info">
-                                User name:
+                    {props.unassignedApps.length ? (
+                        <div className="applications">
+                            <div className="info-header">
+                                Select an application
                             </div>
-                            <div className="info">
-                                Submitted on:
-                            </div>
+                            {props.unassignedApps.map(app => (
+                                <div
+                                    className="single-app"
+                                    key={app.id}
+                                    onClick={event => selectApp(event, props.user.id, app.id)}
+                                >
+                                    <div className="info">
+                                        Name: {`${app.applicant.first_name} ${app.applicant.last_name}`}
+                                    </div>
+                                    <div className="info">
+                                        Submitted on: {app.createdAt.split("T")[0]}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    </div>
+                    ) : (<div />)}
                 </div>
             ) : (
                     <div>

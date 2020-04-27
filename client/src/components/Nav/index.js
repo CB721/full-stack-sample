@@ -4,7 +4,18 @@ import "./style.scss";
 
 function Nav(props) {
     let history = useHistory();
-    
+    function logout(event) {
+        event.preventDefault();
+        props.logout()
+            .then(res => {
+                if (res) {
+                    history.push("/login");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
     return (
         <nav className="nav">
             <ul>
@@ -16,14 +27,20 @@ function Nav(props) {
                         <li onClick={() => history.push("/profile")}>
                             Profile
                         </li>
-                        <li onClick={() => history.push("/logout")}>
+                        <li onClick={event => logout(event)}>
                             Logout
                         </li>
                     </div>
                 ) : (
+                    <div>
+
+                        <li onClick={() => history.push("/signup")}>
+                            Sign Up
+                        </li>
                         <li onClick={() => history.push("/login")}>
                             Login
                         </li>
+                    </div>
                     )}
             </ul>
         </nav>
