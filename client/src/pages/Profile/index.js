@@ -9,7 +9,17 @@ function Profile(props) {
     }
     function selectApp(event, userID, appID) {
         event.preventDefault();
-        console.log("assign application", userID, appID);
+        const update = {
+            id: appID,
+            admin_id: userID
+        }
+        props.assignApplication(update)
+            .then(res => {
+                if (res) {
+                    window.location.reload();
+                }
+            })
+            .catch(err => console.log(err));
     }
     return (
         <div className="profile">
@@ -56,7 +66,7 @@ function Profile(props) {
                             </div>
                             {props.unassignedApps.map(app => (
                                 <div
-                                    className="single-app"
+                                    className="single-app select"
                                     key={app.id}
                                     onClick={event => selectApp(event, props.user.id, app.id)}
                                 >

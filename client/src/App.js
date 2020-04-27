@@ -86,6 +86,15 @@ function App() {
     })
   }
 
+  function assignApplication(update) {
+    return new Promise((resolve, reject) => {
+      API.updateApplication(update)
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => reject(err));
+    })
+  }
   function submitApplication(app) {
 
   }
@@ -114,6 +123,7 @@ function App() {
                 applications={applications}
                 unassignedApps={unassignedApps}
                 submitApplication={submitApplication}
+                assignApplication={assignApplication}
               />
             ) : (
                 <Redirect to="/login" />
