@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import "./style.scss";
 
 function Login(props) {
+    let history = useHistory();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -13,6 +15,15 @@ function Login(props) {
         } else {
             setPassword(value);
         }
+    }
+    function loginUser(event) {
+        props.login(event, { email, password })
+            .then(res => {
+                if (res) {
+                    history.push("/profile");
+                }
+            })
+            .catch(err => console.log(err));
     }
     return (
         <div className="login">
@@ -45,6 +56,12 @@ function Login(props) {
                         placeholder="Your password"
                         autoComplete="current-password"
                     />
+                    <button
+                        onClick={loginUser}
+                        disabled={!email || !password}
+                    >
+                        Login
+                    </button>
                 </div>
             </form>
         </div>

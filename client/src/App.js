@@ -1,15 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
+import API from "./utilities/api";
 import './App.scss';
 
 function App() {
+  const [user, setUser] = useState({});
+  const [applications, setApplications] = useState([]);
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (userData.email) {
+      API.login()
+        .then(res => {
+          console.log(res.data);
+          setApplications(res.data.applications);
+          const userData = {
+            email: res.data.email,
+            first_name: res.data.first_name,
+            last_name: res.data.last_name,
+            is_admin: res.data.is_admin
+          }
+          setUser(userData);
+          localStorage.setItem("user", JSON.stringify(userData));
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  function login(event, loginData) {
+    return new Promise((resolve, reject) => {
+      event.preventDefault();
+      API.login(loginData)
+        .then(res => {
+          setApplications(res.data.applications);
+          const userData = {
+            email: res.data.email,
+            first_name: res.data.first_name,
+            last_name: res.data.last_name,
+            is_admin: res.data.is_admin
+          }
+          setUser(userData);
+          localStorage.setItem("user", JSON.stringify(userData));
+          resolve(true);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
   return (
     <Router>
-      <Nav />
+      <Nav
+        loggedIn={user}
+      />
       <Switch>
         <Route
           exact path="/"
@@ -22,15 +71,34 @@ function App() {
         <Route
           exact path="/profile"
           render={props => (
-            <Profile
-              {...props}
-            />
+            (user.email ? (
+              <Profile
+                {...props}
+                user={user}
+                applications={applications}
+              />
+            ) : (
+                <Redirect to="/login" />
+              ))
           )}
         />
         <Route
           exact path="/login"
           render={props => (
-            <Login
+            (user.email ? (
+              <Redirect to="/profile" />
+            ) : (
+                <Login
+                  {...props}
+                  login={login}
+                />
+              ))
+          )}
+        />
+        <Route
+          exact path="/signup"
+          render={props => (
+            <Signup
               {...props}
             />
           )}

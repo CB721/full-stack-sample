@@ -4,13 +4,14 @@ import "./style.scss";
 
 function Nav(props) {
     let history = useHistory();
+    
     return (
         <nav className="nav">
             <ul>
                 <li onClick={() => history.push("/")}>
                     Home
                 </li>
-                {props.loggedIn ? (
+                {props.loggedIn.email ? (
                     <div>
                         <li onClick={() => history.push("/profile")}>
                             Profile

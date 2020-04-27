@@ -64,36 +64,52 @@ module.exports = {
     },
     login: (req, res) => {
         const { email, password } = req.body;
-        // validate email
-        if (!isEmail(email)) {
-            return res.status(400).send("Invalid email");
-            // validate password is at between 8 and 16 characters
-        } else if (!isByteLength(password, { min: 8, max: 16 })) {
-            return res.status(400).send("Passwords must be between 8 and 16 characters");
-        }
-        // find user by email
-        User.findOne({
-            where: {
-                email
-            }
-        })
-            .then(results => {
-                if (!results) {
-                    return res.status(404).send("No account found");
-                } else {
-                    validatePass(results);
+        // if the user is already signed in, check session
+        if (req.session.user) {
+            User.findOne({
+                where: {
+                    email: req.session.user.email
                 }
             })
-            .catch(err => {
-                console.log(err);
-                res.status(500).json(err);
-            });
+                .then(results => {
+                    if (req.session.user.is_admin) {
+                        admin(results);
+                    } else {
+                        applicant(results);
+                    }
+                })
+                .catch(err => res.status(500).json(err));
+        } else {
+            // validate email
+            if (!isEmail(email)) {
+                return res.status(400).send("Invalid email");
+                // validate password is at between 8 and 16 characters
+            } else if (!isByteLength(password, { min: 8, max: 16 })) {
+                return res.status(400).send("Passwords must be between 8 and 16 characters");
+            }
+            // find user by email
+            User.findOne({
+                where: {
+                    email
+                }
+            })
+                .then(results => {
+                    if (!results) {
+                        return res.status(404).send("No account found");
+                    } else {
+                        validatePass(results);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json(err);
+                });
+        }
         // compare password with hashed password
         function validatePass(user) {
             bcrypt.compare(password, user.password)
                 .then(match => {
                     // if the password matches
-                    console.log(match);
                     if (match) {
                         // save user to session
                         req.session.user = {
@@ -120,7 +136,11 @@ module.exports = {
             Application.findAll({
                 where: {
                     admin_id: user.id
-                }
+                },
+                include: [{
+                    model: User,
+                    as: "applicant"
+                }]
             })
                 .then(applications => {
                     // send back user object with array of all applications
