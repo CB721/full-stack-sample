@@ -11,7 +11,9 @@
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
-    "build:prod": "webpack server.js dist/bundle.js -p"
+    "build:prod": "webpack server.js dist/bundle.js -p",
+    "seed": "cd seeds && node index.js"
+
   },
   "repository": {
     "type": "git",

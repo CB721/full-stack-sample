@@ -1,4 +1,4 @@
-const { User, Application } = require("../models");
+const db = require("../models");
 const { corbato } = require("../utilities/hashPass");
 
 const users = [{ "first_name": "Jorey", "last_name": "Dreamer", "email": "jdreamer0@dedecms.com", "password": "SAGfyrVdF", "is_admin": false },
@@ -80,7 +80,7 @@ const users = [{ "first_name": "Jorey", "last_name": "Dreamer", "email": "jdream
 // demo admin account
 { "first_name": "Charlie", "last_name": "Brown", "email": "c.brown@peanuts.com", "password": "football", "is_admin": true },
 // demo user account
-{ "first_name": "Manu", "last_name": "Ginobili", "email": "m.ginobili@spurs.com", "password": "gospurs", "is_admin": false }]
+{ "first_name": "Manu", "last_name": "Ginobili", "email": "m.ginobili@spurs.com", "password": "gospursG0", "is_admin": false }]
 
 const applications = [{ "applicant_id": 1, "admin_id": 76, "content": "Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.\n\nIn quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.", "is_active": false },
 { "applicant_id": 2, "admin_id": null, "content": "Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.", "is_active": "true" },
@@ -244,11 +244,14 @@ corbato(user.password)
     .then(hash => {
         user.password = hash;
     });
-setTimeout(() => {
-    User.bulkCreate(users)
-        .then()
-        .catch(err => console.log(err));
-    Application.bulkCreate(applications)
-        .then()
-        .catch(err => console.log(err));
-}, 300);
+db.sequelize.sync({ force: true })
+    .then(() => {
+        setTimeout(() => {
+            db.User.bulkCreate(users)
+                .then()
+                .catch(err => console.log(err));
+            db.Application.bulkCreate(applications)
+                .then()
+                .catch(err => console.log(err));
+        }, 300);
+    });
