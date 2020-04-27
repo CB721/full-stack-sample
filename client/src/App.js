@@ -95,8 +95,14 @@ function App() {
         .catch(err => reject(err));
     })
   }
-  function submitApplication(app) {
-
+  function submitApplication(content) {
+    return new Promise((resolve, reject) => {
+      API.createApplication({ content })
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => reject(err));
+    });
   }
   return (
     <Router>

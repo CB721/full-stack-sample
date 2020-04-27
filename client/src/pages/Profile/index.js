@@ -21,6 +21,16 @@ function Profile(props) {
             })
             .catch(err => console.log(err));
     }
+    function submitApplication(event) {
+        event.preventDefault();
+        props.submitApplication(content)
+            .then(res => {
+                if (res) {
+                    window.location.reload();
+                }
+            })
+            .catch(err => console.log(err));
+    }
     return (
         <div className="profile">
             <div className="user-info">
@@ -83,20 +93,29 @@ function Profile(props) {
                 </div>
             ) : (
                     <div>
-                        <div className="applications">
-                            <div className="info-header">
-                                Your application
+                        {props.applications.length ? (
+                            <div className="applications">
+                                <div className="info-header">
+                                    Your applications
+                                </div>
+                                {props.applications.map(app => (
+                                    <div
+                                        className="single-app"
+                                        key={app.id}
+                                    >
+                                        <div className="info">
+                                            Submitted on: {app.createdAt.split("T")[0]}
+                                        </div>
+                                        <div className="info">
+                                            Status: {app.admin_id ? "In progress" : "Unassigned"}
+                                        </div>
+                                        <div className="info">
+                                            Content: {app.content}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                            <div className="info">
-                                Submitted on:
-                            </div>
-                            <div className="info">
-                                Status:
-                            </div>
-                            <div className="info">
-                                Content:
-                            </div>
-                        </div>
+                        ) : (<div />)}
                         <div className="applications">
                             <div className="info-header">
                                 Submit an application
@@ -113,10 +132,17 @@ function Profile(props) {
                                             cols="30"
                                             type="text"
                                             name="content"
+                                            minLength="10"
                                             value={content}
                                             onChange={handleInputChange}
                                             placeholder="Your application"
                                         />
+                                        <button
+                                            onClick={event => submitApplication(event)}
+                                            disabled={!content}
+                                        >
+                                            Submit
+                                        </button>
                                     </div>
                                 </form>
                             </div>
