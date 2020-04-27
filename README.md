@@ -8,9 +8,15 @@ A sample full stack application using Express, Postgres and React.
 4) Run "npm i" to install all of the dependencies
 5) Run "npm run-script seed" to seed the database
 6) Run "npm start" to start the application
+* if React does not launch, add a .env into client folder
+    * Add "SKIP_PREFLIGHT_CHECK=true" to this .env file (no quotes)
+
+### Demo credentials
+1) Admin user - email: c.brown@peanuts.com, password: football
+2) Applicant user - email: m.ginobili@spurs.com, password: gospursG0
 
 ### Technologies Used
-* Axios - API request
+* Axios - API requests
 * Bcrypt - password encryption
 * Connect-session-sequelize - save session cookies to db
 * Express - server

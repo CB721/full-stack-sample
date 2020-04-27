@@ -235,7 +235,7 @@ const applications = [{ "applicant_id": 1, "admin_id": 76, "content": "Nullam si
 
 let admin = users[users.length - 2];
 let user = users[users.length - 1];
-console.log(admin, user);
+// encrypt passwords for demo accounts
 corbato(admin.password)
     .then(hash => {
         admin.password = hash;
@@ -244,12 +244,16 @@ corbato(user.password)
     .then(hash => {
         user.password = hash;
     });
+// will reset the db every time it is run
 db.sequelize.sync({ force: true })
     .then(() => {
+        // set timeout to ensure that password encryption has completed
         setTimeout(() => {
+            // bulk create users
             db.User.bulkCreate(users)
                 .then()
                 .catch(err => console.log(err));
+            // bulk create applications
             db.Application.bulkCreate(applications)
                 .then()
                 .catch(err => console.log(err));

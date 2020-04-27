@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
-import Signup from "./pages/Signup";
+// import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import API from "./utilities/api";
 import './App.scss';
@@ -149,14 +149,14 @@ function App() {
               ))
           )}
         />
-        <Route
+        {/* <Route
           exact path="/signup"
           render={props => (
             <Signup
               {...props}
             />
           )}
-        />
+        /> */}
       </Switch>
     </Router>
   );
