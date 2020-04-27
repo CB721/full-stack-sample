@@ -11,7 +11,8 @@ function Profile(props) {
         event.preventDefault();
         const update = {
             id: appID,
-            admin_id: userID
+            admin_id: userID,
+            is_active: true
         }
         props.assignApplication(update)
             .then(res => {
